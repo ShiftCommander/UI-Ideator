@@ -32,6 +32,14 @@ const ArtifactCard = React.memo(({
         <div 
             className={`artifact-card ${isFocused ? 'focused' : ''} ${isBlurring ? 'generating' : ''}`}
             onClick={onClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onClick();
+                }
+            }}
         >
             <div className="artifact-header">
                 <span className="artifact-style-tag">{artifact.styleName}</span>

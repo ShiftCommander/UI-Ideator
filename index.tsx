@@ -708,7 +708,7 @@ Return ONLY RAW HTML. No markdown fences.
                             <ThinkingIcon />
                         </div>
                     )}
-                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()}>
+                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send prompt">
                         <ArrowUpIcon />
                     </button>
                 </div>
