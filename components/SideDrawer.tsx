@@ -20,7 +20,7 @@ const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
             <div className="drawer-content" onClick={(e) => e.stopPropagation()}>
                 <div className="drawer-header">
                     <h2>{title}</h2>
-                    <button onClick={onClose} className="close-button">&times;</button>
+                    <button onClick={onClose} className="close-button" aria-label="Close">&times;</button>
                 </div>
                 <div className="drawer-body">
                     {children}

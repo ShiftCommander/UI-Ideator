@@ -593,7 +593,20 @@ Return ONLY RAW HTML. No markdown fences.
             {drawerState.mode === 'variations' && (
                 <div className="sexy-grid">
                     {componentVariations.map((v, i) => (
-                         <div key={i} className="sexy-card" onClick={() => applyVariation(v.html)}>
+                         <div
+                             key={i}
+                             className="sexy-card"
+                             onClick={() => applyVariation(v.html)}
+                             role="button"
+                             tabIndex={0}
+                             onKeyDown={(e) => {
+                                 if (e.key === 'Enter' || e.key === ' ') {
+                                     e.preventDefault();
+                                     applyVariation(v.html);
+                                 }
+                             }}
+                             aria-label={`Apply variation: ${v.name}`}
+                         >
                              <div className="sexy-preview">
                                  <iframe srcDoc={v.html} title={v.name} sandbox="allow-scripts allow-same-origin" />
                              </div>
@@ -708,7 +721,7 @@ Return ONLY RAW HTML. No markdown fences.
                             <ThinkingIcon />
                         </div>
                     )}
-                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()}>
+                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send">
                         <ArrowUpIcon />
                     </button>
                 </div>

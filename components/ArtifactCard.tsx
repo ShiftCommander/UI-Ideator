@@ -28,10 +28,22 @@ const ArtifactCard = React.memo(({
 
     const isBlurring = artifact.status === 'streaming';
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+        }
+    };
+
     return (
         <div 
             className={`artifact-card ${isFocused ? 'focused' : ''} ${isBlurring ? 'generating' : ''}`}
             onClick={onClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleKeyDown}
+            aria-label={`Select artifact styled as ${artifact.styleName}`}
+            aria-pressed={isFocused}
         >
             <div className="artifact-header">
                 <span className="artifact-style-tag">{artifact.styleName}</span>
