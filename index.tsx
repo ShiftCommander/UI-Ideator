@@ -599,6 +599,7 @@ Return ONLY RAW HTML. No markdown fences.
                              onClick={() => applyVariation(v.html)}
                              role="button"
                              tabIndex={0}
+                             aria-label={`Apply variation ${v.name}`}
                              onKeyDown={(e) => {
                                  if (e.key === 'Enter' || e.key === ' ') {
                                      e.preventDefault();
@@ -679,19 +680,19 @@ Return ONLY RAW HTML. No markdown fences.
                     {currentSession?.prompt}
                  </div>
                  <div className="action-buttons">
-                    <button onClick={() => setFocusedArtifactIndex(null)}>
+                    <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view">
                         <GridIcon /> Grid View
                     </button>
-                    <button onClick={handleGenerateVariations} disabled={isLoading}>
+                    <button onClick={handleGenerateVariations} disabled={isLoading} aria-label="Generate design variations">
                         <SparklesIcon /> Variations
                     </button>
-                    <button onClick={handleExpandPrototype} disabled={isLoading}>
+                    <button onClick={handleExpandPrototype} disabled={isLoading} aria-label="Expand to full prototype">
                         <ExpandIcon /> Expand
                     </button>
-                    <button onClick={handleShowCode}>
+                    <button onClick={handleShowCode} aria-label="View source code">
                         <CodeIcon /> Source
                     </button>
-                    <button onClick={handleExportHTML}>
+                    <button onClick={handleExportHTML} aria-label="Export as HTML file">
                         <DownloadIcon /> Export HTML
                     </button>
                  </div>
@@ -713,6 +714,7 @@ Return ONLY RAW HTML. No markdown fences.
                             onChange={handleInputChange} 
                             onKeyDown={handleKeyDown} 
                             disabled={isLoading} 
+                            aria-label="Prompt input"
                         />
                     ) : (
                         <div className="input-generating-label">
@@ -720,12 +722,7 @@ Return ONLY RAW HTML. No markdown fences.
                             <ThinkingIcon />
                         </div>
                     )}
-                    <button
-                        className="send-button"
-                        onClick={() => handleSendMessage()}
-                        disabled={isLoading || !inputValue.trim()}
-                        aria-label="Send prompt"
-                    >
+                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send prompt">
                         <ArrowUpIcon />
                     </button>
                 </div>
