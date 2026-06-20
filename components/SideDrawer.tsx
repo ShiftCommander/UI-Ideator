@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface SideDrawerProps {
     isOpen: boolean;
@@ -13,13 +13,35 @@ interface SideDrawerProps {
 }
 
 const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && isOpen) {
+                onClose();
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isOpen, onClose]);
+
     if (!isOpen) return null;
 
     return (
         <div className="drawer-overlay" onClick={onClose}>
-            <div className="drawer-content" onClick={(e) => e.stopPropagation()}>
+            <div
+                className="drawer-content"
+                onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="drawer-title"
+            >
                 <div className="drawer-header">
-                    <h2>{title}</h2>
+                    <h2 id="drawer-title">{title}</h2>
                     <button onClick={onClose} className="close-button" aria-label="Close drawer">&times;</button>
                 </div>
                 <div className="drawer-body">
