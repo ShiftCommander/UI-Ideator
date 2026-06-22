@@ -631,7 +631,7 @@ Return ONLY RAW HTML. No markdown fences.
                      <div className="empty-content">
                          <h1>Flash UI</h1>
                          <p>Creative UI generation in a flash</p>
-                         <button className="surprise-button" onClick={handleSurpriseMe} disabled={isLoading}>
+                         <button className="surprise-button" onClick={handleSurpriseMe} disabled={isLoading} title={isLoading ? "Generation in progress..." : "Surprise me with a random prompt"}>
                              <SparklesIcon /> Surprise Me
                          </button>
                      </div>
@@ -665,12 +665,12 @@ Return ONLY RAW HTML. No markdown fences.
             </div>
 
              {canGoBack && (
-                <button className="nav-handle left" onClick={prevItem} aria-label="Previous">
+                <button className="nav-handle left" onClick={prevItem} aria-label="Previous" title="Previous">
                     <ArrowLeftIcon />
                 </button>
              )}
              {canGoForward && (
-                <button className="nav-handle right" onClick={nextItem} aria-label="Next">
+                <button className="nav-handle right" onClick={nextItem} aria-label="Next" title="Next">
                     <ArrowRightIcon />
                 </button>
              )}
@@ -680,19 +680,19 @@ Return ONLY RAW HTML. No markdown fences.
                     {currentSession?.prompt}
                  </div>
                  <div className="action-buttons">
-                    <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view">
+                    <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view" title="Return to grid view">
                         <GridIcon /> Grid View
                     </button>
-                    <button onClick={handleGenerateVariations} disabled={isLoading} aria-label="Generate design variations">
+                    <button onClick={handleGenerateVariations} disabled={isLoading} aria-label="Generate design variations" title={isLoading ? "Generation in progress..." : "Generate design variations"}>
                         <SparklesIcon /> Variations
                     </button>
-                    <button onClick={handleExpandPrototype} disabled={isLoading} aria-label="Expand to full prototype">
+                    <button onClick={handleExpandPrototype} disabled={isLoading} aria-label="Expand to full prototype" title={isLoading ? "Generation in progress..." : "Expand to full prototype"}>
                         <ExpandIcon /> Expand
                     </button>
-                    <button onClick={handleShowCode} aria-label="View source code">
+                    <button onClick={handleShowCode} aria-label="View source code" title="View source code">
                         <CodeIcon /> Source
                     </button>
-                    <button onClick={handleExportHTML} aria-label="Export as HTML file">
+                    <button onClick={handleExportHTML} aria-label="Export as HTML file" title="Export as HTML file">
                         <DownloadIcon /> Export HTML
                     </button>
                  </div>
@@ -722,7 +722,7 @@ Return ONLY RAW HTML. No markdown fences.
                             <ThinkingIcon />
                         </div>
                     )}
-                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send prompt">
+                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send prompt" title={isLoading ? "Generation in progress..." : !inputValue.trim() ? "Please enter a prompt" : "Send prompt"}>
                         <ArrowUpIcon />
                     </button>
                 </div>
