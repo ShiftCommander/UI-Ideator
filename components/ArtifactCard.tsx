@@ -47,7 +47,7 @@ const ArtifactCard = React.memo(({
             </div>
             <div className="artifact-card-inner">
                 {isBlurring && (
-                    <div className="generating-overlay">
+                    <div className="generating-overlay" role="status" aria-label="Generating component...">
                         <pre ref={codeRef} className="code-stream-preview">
                             {artifact.html}
                         </pre>

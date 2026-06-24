@@ -580,7 +580,7 @@ Return ONLY RAW HTML. No markdown fences.
             title={drawerState.title}
         >
             {isLoadingDrawer && (
-                 <div className="loading-state">
+                 <div className="loading-state" role="status" aria-live="polite">
                      <ThinkingIcon /> 
                      Designing variations...
                  </div>
@@ -627,7 +627,7 @@ Return ONLY RAW HTML. No markdown fences.
             />
 
             <div className={`stage-container ${focusedArtifactIndex !== null ? 'mode-focus' : 'mode-split'}`}>
-                 <div className={`empty-state ${hasStarted ? 'fade-out' : ''}`}>
+                 <div className={`empty-state ${hasStarted ? 'fade-out' : ''}`} aria-hidden={hasStarted}>
                      <div className="empty-content">
                          <h1>Flash UI</h1>
                          <p>Creative UI generation in a flash</p>
@@ -701,7 +701,7 @@ Return ONLY RAW HTML. No markdown fences.
             <div className="floating-input-container">
                 <div className={`input-wrapper ${isLoading ? 'loading' : ''}`}>
                     {(!inputValue && !isLoading) && (
-                        <div className="animated-placeholder" key={placeholderIndex}>
+                        <div className="animated-placeholder" key={placeholderIndex} aria-hidden="true">
                             <span className="placeholder-text">{placeholders[placeholderIndex]}</span>
                             <span className="tab-hint">Tab</span>
                         </div>
@@ -715,9 +715,10 @@ Return ONLY RAW HTML. No markdown fences.
                             onKeyDown={handleKeyDown} 
                             disabled={isLoading} 
                             aria-label="Prompt input"
+                            placeholder="Type a prompt, or press Tab for an idea"
                         />
                     ) : (
-                        <div className="input-generating-label">
+                        <div className="input-generating-label" role="status" aria-live="polite">
                             <span className="generating-prompt-text">{currentSession?.prompt}</span>
                             <ThinkingIcon />
                         </div>
