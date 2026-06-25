@@ -8,3 +8,7 @@
 ## 2026-06-24 - Animated vs Accessible Transparent Placeholder
 **Learning:** Animated, visual placeholders are great for sighted users but terrible for screen readers, which announce every animation tick as plain text. Furthermore, using a CSS-hidden input placeholder (`::placeholder { color: transparent }`) enables an accessible fallback natively.
 **Action:** When creating visually animated typing effects or cyclic placeholders in inputs, always apply `aria-hidden="true"` to the animated visual element, and rely on the native `<input placeholder="...">` combined with transparent `::placeholder` styling so screen readers receive a static, descriptive instruction without double-announcing.
+
+## 2024-05-19 - iframe Focus Trap with pointer-events: none
+**Learning:** Using `pointer-events: none` on an `iframe` prevents mouse interaction but does not remove its contents from the keyboard tab sequence. This creates a focus trap for keyboard users where focus disappears into the iframe without any visual indication or way to interact.
+**Action:** Always add `tabIndex={-1}` to `iframe` elements that are meant to be purely visual previews (like unfocused artifact cards or side drawer previews) to properly remove them from the accessibility tree's focus order.

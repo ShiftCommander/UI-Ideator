@@ -58,6 +58,7 @@ const ArtifactCard = React.memo(({
                     title={artifact.id} 
                     sandbox="allow-scripts allow-forms allow-modals allow-popups allow-presentation allow-same-origin"
                     className="artifact-iframe"
+                    tabIndex={isFocused ? undefined : -1}
                 />
             </div>
         </div>

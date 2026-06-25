@@ -64,6 +64,17 @@ function App() {
     }
   }, [focusedArtifactIndex]);
 
+  // Exit focus mode on Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && focusedArtifactIndex !== null && !drawerState.isOpen) {
+            setFocusedArtifactIndex(null);
+        }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [focusedArtifactIndex, drawerState.isOpen]);
+
   // Cycle placeholders
   useEffect(() => {
       const interval = setInterval(() => {
@@ -608,7 +619,7 @@ Return ONLY RAW HTML. No markdown fences.
                              }}
                          >
                              <div className="sexy-preview">
-                                 <iframe srcDoc={v.html} title={v.name} sandbox="allow-scripts allow-same-origin" />
+                                 <iframe srcDoc={v.html} title={v.name} sandbox="allow-scripts allow-same-origin" tabIndex={-1} />
                              </div>
                              <div className="sexy-label">{v.name}</div>
                          </div>
@@ -676,11 +687,11 @@ Return ONLY RAW HTML. No markdown fences.
              )}
 
             <div className={`action-bar ${focusedArtifactIndex !== null ? 'visible' : ''}`}>
-                 <div className="active-prompt-label">
+                 <div className="active-prompt-label" title={currentSession?.prompt}>
                     {currentSession?.prompt}
                  </div>
                  <div className="action-buttons">
-                    <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view" title="Return to grid view">
+                    <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view (Esc)" title="Return to grid view (Esc)">
                         <GridIcon /> Grid View
                     </button>
                     <button onClick={handleGenerateVariations} disabled={isLoading} aria-label="Generate design variations" title={isLoading ? "Generation in progress..." : "Generate design variations"}>
