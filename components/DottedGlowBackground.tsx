@@ -123,7 +123,7 @@ export default function DottedGlowBackground({
   }, [gap, radius, color, glowColor, opacity, speedMin, speedMax, speedScale]);
 
   return (
-    <div ref={containerRef} className={className} style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+    <div ref={containerRef} className={className} style={{ position: "absolute", inset: 0, zIndex: 0 }} aria-hidden="true">
       <canvas ref={canvasRef} style={{ display: "block" }} />
     </div>
   );
