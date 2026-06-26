@@ -12,3 +12,7 @@
 ## 2024-05-19 - iframe Focus Trap with pointer-events: none
 **Learning:** Using `pointer-events: none` on an `iframe` prevents mouse interaction but does not remove its contents from the keyboard tab sequence. This creates a focus trap for keyboard users where focus disappears into the iframe without any visual indication or way to interact.
 **Action:** Always add `tabIndex={-1}` to `iframe` elements that are meant to be purely visual previews (like unfocused artifact cards or side drawer previews) to properly remove them from the accessibility tree's focus order.
+
+## 2024-10-24 - Modal Focus Trapping with inert
+**Learning:** To create an effective focus trap for modals or drawers, it is much easier and more robust to use the native HTML `inert` attribute on all background sibling elements rather than manually managing focus boundaries. This ensures both keyboard and screen reader accessibility are handled natively by the browser.
+**Action:** When creating modals or drawers, apply `inert={isOpen ? true : undefined}` to the main application container and any other background elements to natively prevent interaction outside the active dialog.
