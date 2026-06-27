@@ -34,7 +34,7 @@ const ArtifactCard = React.memo(({
             onClick={onClick}
             role="button"
             tabIndex={0}
-            aria-label={`View ${artifact.styleName} artifact`}
+            aria-label={isBlurring ? `Generating ${artifact.styleName} artifact...` : `View ${artifact.styleName} artifact`}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -55,7 +55,7 @@ const ArtifactCard = React.memo(({
                 )}
                 <iframe 
                     srcDoc={artifact.html} 
-                    title={artifact.id} 
+                    title={`${artifact.styleName} design preview`}
                     sandbox="allow-scripts allow-forms allow-modals allow-popups allow-presentation allow-same-origin"
                     className="artifact-iframe"
                     tabIndex={isFocused ? undefined : -1}

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface SideDrawerProps {
     isOpen: boolean;
@@ -13,6 +13,17 @@ interface SideDrawerProps {
 }
 
 const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        if (isOpen) {
+            // Focus the close button when the drawer opens for a11y
+            setTimeout(() => {
+                closeButtonRef.current?.focus();
+            }, 50);
+        }
+    }, [isOpen]);
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && isOpen) {
@@ -42,7 +53,7 @@ const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
             >
                 <div className="drawer-header">
                     <h2 id="drawer-title">{title}</h2>
-                    <button onClick={onClose} className="close-button" aria-label="Close drawer" title="Close drawer">&times;</button>
+                    <button ref={closeButtonRef} onClick={onClose} className="close-button" aria-label="Close drawer" title="Close drawer">&times;</button>
                 </div>
                 <div className="drawer-body">
                     {children}
