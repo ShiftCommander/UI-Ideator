@@ -25,7 +25,9 @@ import {
     ArrowUpIcon, 
     GridIcon,
     DownloadIcon,
-    ExpandIcon
+    ExpandIcon,
+    CopyIcon,
+    CheckIcon
 } from './components/Icons';
 
 function App() {
@@ -46,6 +48,7 @@ function App() {
   }>({ isOpen: false, mode: null, title: '', data: null });
 
   const [componentVariations, setComponentVariations] = useState<ComponentVariation[]>([]);
+  const [isCopied, setIsCopied] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const gridScrollRef = useRef<HTMLDivElement>(null);
@@ -329,6 +332,19 @@ Return ONLY RAW HTML. No markdown fences. Ensure it begins with <style> or struc
       if (currentSession && focusedArtifactIndex !== null) {
           const artifact = currentSession.artifacts[focusedArtifactIndex];
           setDrawerState({ isOpen: true, mode: 'code', title: 'Source Code', data: artifact.html });
+          setIsCopied(false);
+      }
+  };
+
+  const handleCopyCode = async () => {
+      if (drawerState.data) {
+          try {
+              await navigator.clipboard.writeText(drawerState.data);
+              setIsCopied(true);
+              setTimeout(() => setIsCopied(false), 2000);
+          } catch (err) {
+              console.error('Failed to copy text: ', err);
+          }
       }
   };
 
@@ -581,7 +597,7 @@ Return ONLY RAW HTML. No markdown fences.
 
   return (
     <>
-        <a href="https://x.com/ammaar" target="_blank" rel="noreferrer" className={`creator-credit ${hasStarted ? 'hide-on-mobile' : ''}`}>
+        <a href="https://x.com/ammaar" target="_blank" rel="noreferrer" className={`creator-credit ${hasStarted ? 'hide-on-mobile' : ''}`} inert={drawerState.isOpen ? true : undefined}>
             created by @ammaar
         </a>
 
@@ -598,7 +614,18 @@ Return ONLY RAW HTML. No markdown fences.
             )}
 
             {drawerState.mode === 'code' && (
-                <pre className="code-block"><code>{drawerState.data}</code></pre>
+                <div style={{ position: 'relative' }}>
+                    <div className="action-buttons" style={{ position: 'absolute', top: '16px', right: '16px' }}>
+                        <button
+                            onClick={handleCopyCode}
+                            aria-label={isCopied ? "Code copied" : "Copy code"}
+                            title={isCopied ? "Code copied" : "Copy code"}
+                        >
+                            {isCopied ? <CheckIcon /> : <CopyIcon />} {isCopied ? "Copied!" : "Copy"}
+                        </button>
+                    </div>
+                    <pre className="code-block"><code>{drawerState.data}</code></pre>
+                </div>
             )}
             
             {drawerState.mode === 'variations' && (
@@ -628,7 +655,7 @@ Return ONLY RAW HTML. No markdown fences.
             )}
         </SideDrawer>
 
-        <div className="immersive-app">
+        <div className="immersive-app" inert={drawerState.isOpen ? true : undefined}>
             <DottedGlowBackground 
                 gap={24} 
                 radius={1.5} 
