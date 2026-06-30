@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface SideDrawerProps {
     isOpen: boolean;
@@ -13,6 +13,9 @@ interface SideDrawerProps {
 }
 
 const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
+    const previousFocusRef = useRef<HTMLElement | null>(null);
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && isOpen) {
@@ -22,6 +25,16 @@ const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
 
         if (isOpen) {
             document.addEventListener('keydown', handleKeyDown);
+            // Store previous focus and move focus to close button
+            previousFocusRef.current = document.activeElement as HTMLElement;
+            // Delay focus slightly to ensure element is rendered
+            setTimeout(() => {
+                closeButtonRef.current?.focus();
+            }, 0);
+        } else if (previousFocusRef.current) {
+            // Restore focus when closed
+            previousFocusRef.current.focus();
+            previousFocusRef.current = null;
         }
 
         return () => {
@@ -42,7 +55,7 @@ const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
             >
                 <div className="drawer-header">
                     <h2 id="drawer-title">{title}</h2>
-                    <button onClick={onClose} className="close-button" aria-label="Close drawer" title="Close drawer">&times;</button>
+                    <button ref={closeButtonRef} onClick={onClose} className="close-button" aria-label="Close drawer" title="Close drawer">&times;</button>
                 </div>
                 <div className="drawer-body">
                     {children}
