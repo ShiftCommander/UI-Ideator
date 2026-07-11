@@ -16,3 +16,6 @@
 ## 2024-10-24 - Modal Focus Trapping with inert
 **Learning:** To create an effective focus trap for modals or drawers, it is much easier and more robust to use the native HTML `inert` attribute on all background sibling elements rather than manually managing focus boundaries. This ensures both keyboard and screen reader accessibility are handled natively by the browser.
 **Action:** When creating modals or drawers, apply `inert={isOpen ? true : undefined}` to the main application container and any other background elements to natively prevent interaction outside the active dialog.
+## 2024-10-25 - Focus Restoration in Dynamic Modals
+**Learning:** Returning focus to the previously active element when a modal or drawer closes is critical for maintaining context for keyboard and screen reader users. Failing to do so resets their position to the start of the document or drops focus entirely.
+**Action:** When creating modals or drawers, always capture `document.activeElement` when the component opens, shift focus inside the modal, and actively call `.focus()` on the captured element when the modal is closed.
