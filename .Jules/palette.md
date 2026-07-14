@@ -16,3 +16,7 @@
 ## 2024-10-24 - Modal Focus Trapping with inert
 **Learning:** To create an effective focus trap for modals or drawers, it is much easier and more robust to use the native HTML `inert` attribute on all background sibling elements rather than manually managing focus boundaries. This ensures both keyboard and screen reader accessibility are handled natively by the browser.
 **Action:** When creating modals or drawers, apply `inert={isOpen ? true : undefined}` to the main application container and any other background elements to natively prevent interaction outside the active dialog.
+
+## 2026-07-14 - Descriptive Iframe Titles
+**Learning:** Using system-generated IDs for iframe `title` attributes creates an opaque and confusing experience for screen reader users, who rely on the title to understand the iframe's content.
+**Action:** Always use descriptive, human-readable strings (like style names or component descriptions) for iframe `title` attributes to provide meaningful context for assistive technologies.
