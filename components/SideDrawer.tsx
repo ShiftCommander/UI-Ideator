@@ -13,15 +13,17 @@ interface SideDrawerProps {
 }
 
 const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
-    const closeBtnRef = useRef<HTMLButtonElement>(null);
     const previousFocusRef = useRef<HTMLElement | null>(null);
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         if (isOpen) {
             if (!previousFocusRef.current) {
                 previousFocusRef.current = document.activeElement as HTMLElement;
             }
-            setTimeout(() => closeBtnRef.current?.focus(), 0);
+            setTimeout(() => {
+                closeButtonRef.current?.focus();
+            }, 0);
         } else {
             if (previousFocusRef.current) {
                 const el = previousFocusRef.current;
@@ -60,7 +62,7 @@ const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
             >
                 <div className="drawer-header">
                     <h2 id="drawer-title">{title}</h2>
-                    <button ref={closeBtnRef} onClick={onClose} className="close-button" aria-label="Close drawer" title="Close drawer">&times;</button>
+                    <button ref={closeButtonRef} onClick={onClose} className="close-button" aria-label="Close drawer" title="Close drawer">&times;</button>
                 </div>
                 <div className="drawer-body">
                     {children}
