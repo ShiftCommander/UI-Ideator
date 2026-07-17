@@ -631,7 +631,7 @@ Return ONLY RAW HTML. No markdown fences.
                      <div className="empty-content">
                          <h1>Flash UI</h1>
                          <p>Creative UI generation in a flash</p>
-                         <button className="surprise-button" onClick={handleSurpriseMe} disabled={isLoading}>
+                         <button className="surprise-button" onClick={handleSurpriseMe} disabled={isLoading} title={isLoading ? "Generating..." : "Surprise Me"}>
                              <SparklesIcon /> Surprise Me
                          </button>
                      </div>
@@ -683,10 +683,10 @@ Return ONLY RAW HTML. No markdown fences.
                     <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view">
                         <GridIcon /> Grid View
                     </button>
-                    <button onClick={handleGenerateVariations} disabled={isLoading} aria-label="Generate design variations">
+                    <button onClick={handleGenerateVariations} disabled={isLoading} aria-label="Generate design variations" title={isLoading ? "Generating variations..." : "Generate design variations"}>
                         <SparklesIcon /> Variations
                     </button>
-                    <button onClick={handleExpandPrototype} disabled={isLoading} aria-label="Expand to full prototype">
+                    <button onClick={handleExpandPrototype} disabled={isLoading} aria-label="Expand to full prototype" title={isLoading ? "Expanding prototype..." : "Expand to full prototype"}>
                         <ExpandIcon /> Expand
                     </button>
                     <button onClick={handleShowCode} aria-label="View source code">
@@ -722,7 +722,7 @@ Return ONLY RAW HTML. No markdown fences.
                             <ThinkingIcon />
                         </div>
                     )}
-                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send prompt">
+                    <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send prompt" title={isLoading ? "Designing..." : !inputValue.trim() ? "Enter a prompt first" : "Send prompt"}>
                         <ArrowUpIcon />
                     </button>
                 </div>
