@@ -16,3 +16,6 @@
 ## 2024-10-24 - Modal Focus Trapping with inert
 **Learning:** To create an effective focus trap for modals or drawers, it is much easier and more robust to use the native HTML `inert` attribute on all background sibling elements rather than manually managing focus boundaries. This ensures both keyboard and screen reader accessibility are handled natively by the browser.
 **Action:** When creating modals or drawers, apply `inert={isOpen ? true : undefined}` to the main application container and any other background elements to natively prevent interaction outside the active dialog.
+## 2024-05-24 - Interactive Component Focus Management
+**Learning:** Proper focus management in React components like side drawers involves two critical pieces: moving focus into the component when it opens, and restoring focus to the previously active element when it closes.
+**Action:** When creating modals or drawers, use a `useRef` to store `document.activeElement` before focusing inside the new component, and restore it on unmount or close.
