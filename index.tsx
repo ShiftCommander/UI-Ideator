@@ -568,6 +568,31 @@ Return ONLY RAW HTML. No markdown fences.
       }
   }
 
+  // Global keyboard shortcuts
+  useEffect(() => {
+      const handleGlobalKeyDown = (e: KeyboardEvent) => {
+          // Don't trigger if user is typing in an input
+          if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+              return;
+          }
+
+          if (e.key === 'Escape') {
+              if (drawerState.isOpen) {
+                  setDrawerState(s => ({...s, isOpen: false}));
+              } else if (focusedArtifactIndex !== null) {
+                  setFocusedArtifactIndex(null);
+              }
+          } else if (e.key === 'ArrowLeft') {
+              if (canGoBack) prevItem();
+          } else if (e.key === 'ArrowRight') {
+              if (canGoForward) nextItem();
+          }
+      };
+
+      document.addEventListener('keydown', handleGlobalKeyDown);
+      return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [focusedArtifactIndex, canGoBack, canGoForward, prevItem, nextItem, drawerState.isOpen]);
+
   return (
     <>
         <a href="https://x.com/ammaar" target="_blank" rel="noreferrer" className={`creator-credit ${hasStarted ? 'hide-on-mobile' : ''}`}>
@@ -665,12 +690,12 @@ Return ONLY RAW HTML. No markdown fences.
             </div>
 
              {canGoBack && (
-                <button className="nav-handle left" onClick={prevItem} aria-label="Previous" title="Previous">
+                <button className="nav-handle left" onClick={prevItem} aria-label="Previous (Left Arrow)" title="Previous (Left Arrow)">
                     <ArrowLeftIcon />
                 </button>
              )}
              {canGoForward && (
-                <button className="nav-handle right" onClick={nextItem} aria-label="Next" title="Next">
+                <button className="nav-handle right" onClick={nextItem} aria-label="Next (Right Arrow)" title="Next (Right Arrow)">
                     <ArrowRightIcon />
                 </button>
              )}
@@ -680,7 +705,7 @@ Return ONLY RAW HTML. No markdown fences.
                     {currentSession?.prompt}
                  </div>
                  <div className="action-buttons">
-                    <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view" title="Return to grid view">
+                    <button onClick={() => setFocusedArtifactIndex(null)} aria-label="Return to grid view (Escape)" title="Return to grid view (Escape)">
                         <GridIcon /> Grid View
                     </button>
                     <button onClick={handleGenerateVariations} disabled={isLoading} aria-label="Generate design variations" title={isLoading ? "Generation in progress..." : "Generate design variations"}>
@@ -715,6 +740,7 @@ Return ONLY RAW HTML. No markdown fences.
                             onKeyDown={handleKeyDown} 
                             disabled={isLoading} 
                             aria-label="Prompt input"
+                            title={isLoading ? "Generation in progress..." : "Enter your prompt"}
                         />
                     ) : (
                         <div className="input-generating-label">
@@ -723,7 +749,7 @@ Return ONLY RAW HTML. No markdown fences.
                         </div>
                     )}
                     <button className="send-button" onClick={() => handleSendMessage()} disabled={isLoading || !inputValue.trim()} aria-label="Send prompt" title={isLoading ? "Generation in progress..." : !inputValue.trim() ? "Please enter a prompt" : "Send prompt"}>
-                        <ArrowUpIcon />
+                        {isLoading ? <ThinkingIcon /> : <ArrowUpIcon />}
                     </button>
                 </div>
             </div>
