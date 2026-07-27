@@ -617,7 +617,7 @@ html, body {
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Disable scrolling of the grid completely when an item is focused to fix overscroll drift */
+    /* Disables scrolling of the grid completely when an item is focused to fix overscroll drift */
     .stage-container.mode-focus .artifact-grid {
         overflow-y: hidden !important;
         pointer-events: none;
